@@ -3,7 +3,24 @@
 process.env.NTBA_FIX_319 = 'test';
 
 // Require out Telegram helper package
-const TelegramBot = require('node-telegram-bot-api');
+import TelegramBot from 'node-telegram-bot-api';
+import costflow from 'costflow';
+
+const config = {
+  mode: 'beancount',
+  currency: 'CNY',
+  timezone: 'Asia/Shanghai',
+  account: {
+    银行卡: 'Assets:Bank:CCB:2225',
+    现金: 'Assets:Cash',
+    微信: 'Assets:Digital:WX',
+    支付宝: 'Assets:Digital:ALIPAY',
+    
+    信用卡: 'Liabilities:CreditCard:CMB:7632',
+
+    午饭: 'Expenses:Food:Daily:Lunch'
+  },
+};
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -21,15 +38,18 @@ module.exports = async (request, response) => {
     if (body.message) {
       // Retrieve the ID for this chat
       // and the text that the user sent
-      const { chat: { id }, text } = body.message;
+      const { chat: { id }, text, message_id } = body.message;
 
-      // Create a message to send back
-      // We can use Markdown inside this
-      const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+      try {
+        // Create a costflow parsed message to send back
+        const { output } = await costflow.parse(text, config);
 
-      // Send our new message back in Markdown and
-      // wait for the request to finish
-      await bot.sendMessage(id, message, {parse_mode: 'Markdown'});
+        // Send our new message back in Markdown and
+        // wait for the request to finish
+        await bot.sendMessage(id, output, { reply_to_message_id: message_id });
+      } catch (error) {
+        await bot.sendMessage(id, error.message, { reply_to_message_id: message_id });
+      }
     }
   } catch (error) {
     // If there was an error sending our message then we
