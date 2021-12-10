@@ -5,6 +5,7 @@ process.env.NTBA_FIX_319 = 'test';
 // Require out Telegram helper package
 import TelegramBot from 'node-telegram-bot-api';
 import costflow from 'costflow';
+import { Octokit, App } from "octokit";
 
 const config = {
   mode: 'beancount',
@@ -21,6 +22,30 @@ const config = {
     午饭: 'Expenses:Food:Daily:Lunch'
   },
 };
+
+
+// Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
+const octokit = new Octokit({ auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN});
+
+
+async function recordBillToGithub(output, text) {
+  const response = await octokit.rest.repos.getContent({
+    owner: "kba977",
+    repo: "MyMoney",
+    path: "2021/0-default/12-expenses.bean"
+  });
+  const { content: encodeContent, encoding, sha, path } = response.data;
+  const content = Buffer.from(encodeContent, encoding).toString();
+
+  await octokit.rest.repos.createOrUpdateFileContents({
+    owner: "kba977",
+    repo: "MyMoney",
+    path: path,
+    message: text,
+    content: Buffer.from(`${content}${output}\n\n`).toString('base64'),
+    sha: sha
+  });
+}
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -43,6 +68,9 @@ module.exports = async (request, response) => {
       try {
         // Create a costflow parsed message to send back
         const { output } = await costflow.parse(text, config);
+
+        // Record to Github
+        await recordBillToGithub(output, text)
 
         // Send our new message back in Markdown and
         // wait for the request to finish
