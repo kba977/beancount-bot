@@ -1,2 +1,3 @@
-.vercel
+.idea/
+.vercel/
 node_modules/
