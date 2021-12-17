@@ -30,7 +30,7 @@ module.exports = async (request, response) => {
 
     // Check the message send to telegram is valid format
     if (!text.match(/^@.*?\s>\s.+/)) {
-      await bot.sendMessage(id, "*Error Format:*\neg: `@魏家便利店 卤肉饭 #午饭 20 xyk > lunch`", {
+      await bot.sendMessage(id, "*Error Format:*\neg: `@魏家便利店 卤肉饭 20 xyk > lunch`", {
         reply_to_message_id: message_id,
         parse_mode: 'Markdown'
       });
