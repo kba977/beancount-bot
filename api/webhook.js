@@ -3,9 +3,9 @@
 process.env.NTBA_FIX_319 = 'test';
 
 // Require out Telegram helper package
-import TelegramBot from 'node-telegram-bot-api';
-import { recordBillToGithub } from '../utils/github'
-import { parse } from '../utils/parser'
+const TelegramBot = require('node-telegram-bot-api');
+const { recordBillToGithub } = require('../utils/github');
+const { parse } = require('../utils/parser');
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -30,7 +30,7 @@ module.exports = async (request, response) => {
 
     // Check the message send to telegram is valid format
     if (!text.match(/^@.*?\s>\s.+/)) {
-      await bot.sendMessage(id, "*Error Format:*\neg: `@魏家便利店 卤肉饭 20 xyk > lunch`", {
+      await bot.sendMessage(id, "*Error Format:*\neg: `@魏家便利店 卤肉饭 20 信用卡 > 午餐`", {
         reply_to_message_id: message_id,
         parse_mode: 'Markdown'
       });

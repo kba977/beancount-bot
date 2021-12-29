@@ -1,4 +1,4 @@
-import { Octokit } from 'octokit';
+const { Octokit } = require('octokit');
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
 const octokit = new Octokit({ auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN });
