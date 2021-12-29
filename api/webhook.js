@@ -6,6 +6,7 @@ process.env.NTBA_FIX_319 = 'test';
 const TelegramBot = require('node-telegram-bot-api');
 const { recordBillToGithub } = require('../utils/github');
 const { parse } = require('../utils/parser');
+const { accounts, accounts_str } = require('../utils/accounts');
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -21,15 +22,21 @@ module.exports = async (request, response) => {
   const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
 
   // Retrieve the POST request body that gets sent from Telegram
-  const { message } = request.body ;
+  const { message } = request.body;
 
   // Ensure that this is a message being sent
   if (message) {
     // Retrieve the ID for this chat and the text that the user sent
     const { chat: { id }, text, message_id } = message;
 
+    if (text == '/accounts') {
+      await bot.sendMessage(id, accounts_str(), { 
+        reply_to_message_id: message_id, 
+        parse_mode: 'Markdown' 
+      });
+    }
     // Check the message send to telegram is valid format
-    if (!text.match(/^@.*?\s>\s.+/)) {
+    else if (!text.match(/^@.*?\s>\s.+/)) {
       await bot.sendMessage(id, "*Error Format:*\neg: `@魏家便利店 卤肉饭 20 信用卡 > 午餐`", {
         reply_to_message_id: message_id,
         parse_mode: 'Markdown'

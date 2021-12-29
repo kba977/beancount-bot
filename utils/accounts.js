@@ -1,4 +1,4 @@
-module.exports.accounts = {
+const accounts = {
       // Assets
     银行卡: 'Assets:Bank:CMB:6371',
     现金: 'Assets:Cash',
@@ -51,4 +51,20 @@ module.exports.accounts = {
 
     /// 其他
     其他: 'Expenses:Other'
+}
+
+
+function accounts_str() {
+  account_arr = []
+  for (const [key, value] of Object.entries(accounts)) {
+    var account = `- ${key} ${value}`
+    account_arr.push(account)
+  }
+  return account_arr.join("\n")
+}
+
+
+module.exports = {
+  accounts: accounts,
+  accounts_str: accounts_str
 }

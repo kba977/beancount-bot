@@ -10,7 +10,7 @@ function getCurrentYearAndMonth() {
 
 async function recordBillToGithub(output, text) {
   const [year, month] = getCurrentYearAndMonth()
-  const path = `${year}/0-default/${month}-expenses.bean`
+  const path = `${year}/0-default/${String(month).padStart(2, '0')}-expenses.bean`
 
   var content = '';
   var sign = '';
