@@ -16,6 +16,9 @@ const accounts = {
     水电燃气 : 'Expenses:Home:SDRQ',
     理发费: 'Expenses:Home:Haircut',
 
+    小宝医疗: 'Expenses:Child:Medical',
+    小宝日常: 'Expenses:Child:Other',
+
     /// 人情
     父母: 'Expenses:Relationship:FilialPiety',
     
