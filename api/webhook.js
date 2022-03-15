@@ -6,9 +6,9 @@ process.env.NTBA_FIX_319 = 'test';
 const TelegramBot = require('node-telegram-bot-api');
 const { recordBillToGithub } = require('../utils/github');
 const { parse } = require('../utils/parser');
-const { accounts, accounts_str } = require('../utils/accounts');
+const { accounts_str } = require('../utils/accounts');
 
-const my_id = 428455027;
+const bot_id = process.env.BOT_ID;
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -31,7 +31,7 @@ module.exports = async (request, response) => {
     // Retrieve the ID for this chat and the text that the user sent
     const { chat: { id, first_name }, text, message_id } = message;
 
-    if (id == my_id) {
+    if (id == bot_id) {
       if (text == '/accounts') {
         await bot.sendMessage(id, accounts_str(), { 
           reply_to_message_id: message_id, 
@@ -58,7 +58,7 @@ module.exports = async (request, response) => {
       }
     } else {
       await bot.sendMessage(id, '对不起, 该机器人为私人机器人, 您无权使用', { reply_to_message_id: message_id });
-      await bot.sendMessage(my_id, `主人主人!!, 发现匿名用户使用, username: ${first_name}, message: ${text}`);
+      await bot.sendMessage(bot_id, `主人主人!!, 发现匿名用户使用, username: ${first_name}, message: ${text}`);
     }
   }
 

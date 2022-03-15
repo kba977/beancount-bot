@@ -1,14 +1,13 @@
 const accounts = {
       // Assets
-    银行卡: 'Assets:Bank:CMB:6371',
-    现金: 'Assets:Cash',
-    微信: 'Assets:Digital:WX',
-    支付宝: 'Assets:Digital:ALIPAY',
+    银行卡: 'Assets:Bank:ZCM:CMB:6371',
+    现金: 'Assets:Cash:ZCM',
+    微信: 'Assets:Digital:ZCM:WX',
+    支付宝: 'Assets:Digital:ZCM:ALIPAY',
     京馆涮: 'Assets:PrepaidCard:Restaurant:JGS',
-    公交卡: 'Assets:PrepaidCard:BusCard:XA',
 
     // Liabilities
-    信用卡: 'Liabilities:CreditCard:CMB:5483',
+    信用卡: 'Liabilities:CreditCard:ZCM:CMB:5483',
 
     // Expenses
     
@@ -18,6 +17,10 @@ const accounts = {
 
     小宝医疗: 'Expenses:Child:Medical',
     小宝日常: 'Expenses:Child:Other',
+    小宝衣服: 'Expenses:Child:Clothing',
+    小宝疫苗: 'Expenses:Child:Vaccine',
+    纸尿裤: 'Expenses:Child:Diaper',
+    奶粉: 'Expenses:Child:MilkPowder',
 
     /// 人情
     父母: 'Expenses:Relationship:FilialPiety',
@@ -29,7 +32,8 @@ const accounts = {
     早餐: 'Expenses:Food:Daily:Breakfast',
     午餐: 'Expenses:Food:Daily:Lunch',
     晚餐: 'Expenses:Food:Daily:Dinner',
-    饮料水果: 'Expenses:Food:Daily:DrinkFruit',
+    饮料: 'Expenses:Food:Daily:DrinkFruit',
+    水果: 'Expenses:Food:Daily:DrinkFruit',
     买菜: 'Expenses:Food:Vegetables',
     零食: 'Expenses:Food:Snacks',
     大餐: 'Expenses:Food:BigMeal',
@@ -68,6 +72,5 @@ function accounts_str() {
 
 
 module.exports = {
-  accounts: accounts,
   accounts_str: accounts_str
 }
