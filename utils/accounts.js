@@ -72,5 +72,6 @@ function accounts_str() {
 
 
 module.exports = {
+  accounts: accounts,
   accounts_str: accounts_str
 }
