@@ -4,7 +4,6 @@ const accounts = {
     现金: 'Assets:Cash:ZCM',
     微信: 'Assets:Digital:ZCM:WX',
     支付宝: 'Assets:Digital:ZCM:ALIPAY',
-    京馆涮: 'Assets:PrepaidCard:Restaurant:JGS',
 
     // Liabilities
     信用卡: 'Liabilities:CreditCard:ZCM:CMB:5483',
@@ -13,7 +12,7 @@ const accounts = {
     
     话费: 'Expenses:Home:Phone',
     水电燃气 : 'Expenses:Home:SDRQ',
-    理发费: 'Expenses:Home:Haircut',
+    理发: 'Expenses:Home:Haircut',
 
     小宝医疗: 'Expenses:Child:Medical',
     小宝日常: 'Expenses:Child:Other',
@@ -27,6 +26,7 @@ const accounts = {
     
     /// 购物
     电子产品: 'Expenses:Shopping:Digital',
+    购物: 'Expenses:Shopping:Other',
     
     /// 餐饮
     早餐: 'Expenses:Food:Daily:Breakfast',
@@ -45,9 +45,12 @@ const accounts = {
 
     /// 娱乐
     电影: 'Expenses:Entertainment:Movie',
+    娱乐: 'Expenses:Entertainment:Other',
+    游戏: 'Expenses:Entertainment:Game',
+    流媒体: 'Expenses:Entertainment:Media',
 
     /// 交通
-    共享单车: 'Expenses:Transport:OFO',
+    单车: 'Expenses:Transport:OFO',
     公交: 'Expenses:Transport:GJDT',
     地铁: 'Expenses:Transport:GJDT',
 
