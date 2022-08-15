@@ -6,7 +6,8 @@ const accounts = {
     支付宝: 'Assets:Digital:ZCM:ALIPAY',
 
     // Liabilities
-    信用卡: 'Liabilities:CreditCard:ZCM:CMB:5483',
+    Young卡: 'Liabilities:CreditCard:ZCM:CMB:5483',
+    信用卡: 'Liabilities:CreditCard:ZCM:CMB:7186',
 
     // Expenses
     
