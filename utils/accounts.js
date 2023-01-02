@@ -1,12 +1,12 @@
 const accounts = {
       // Assets
     银行卡: 'Assets:Bank:ZCM:CMB:6371',
+    银行卡: 'Assets:Bank:ZCM:CMB:1025',
     现金: 'Assets:Cash:ZCM',
     微信: 'Assets:Digital:ZCM:WX',
     支付宝: 'Assets:Digital:ZCM:ALIPAY',
 
     // Liabilities
-    Young卡: 'Liabilities:CreditCard:ZCM:CMB:5483',
     信用卡: 'Liabilities:CreditCard:ZCM:CMB:7186',
 
     // Expenses
@@ -21,28 +21,20 @@ const accounts = {
     小宝疫苗: 'Expenses:Child:Vaccine',
     纸尿裤: 'Expenses:Child:Diaper',
     奶粉: 'Expenses:Child:MilkPowder',
-
-    /// 人情
-    父母: 'Expenses:Relationship:FilialPiety',
     
     /// 购物
     电子产品: 'Expenses:Shopping:Digital',
     购物: 'Expenses:Shopping:Other',
     
     /// 餐饮
-    早餐: 'Expenses:Food:Daily:Breakfast',
-    午餐: 'Expenses:Food:Daily:Lunch',
-    晚餐: 'Expenses:Food:Daily:Dinner',
-    饮料: 'Expenses:Food:DrinkFruit',
-    水果: 'Expenses:Food:DrinkFruit',
+    早餐: 'Expenses:Food:Daily:ZCM:Breakfast',
+    午餐: 'Expenses:Food:Daily:ZCM:Lunch',
+    晚餐: 'Expenses:Food:Daily:ZCM:Dinner',
+    饮料: 'Expenses:Food:Snacks',
+    水果: 'Expenses:Food:Fruit',
     买菜: 'Expenses:Food:Vegetables',
     零食: 'Expenses:Food:Snacks',
     大餐: 'Expenses:Food:BigMeal',
-
-
-    /// 医疗健康
-    门诊: 'Expenses:Health:Outpatient',
-    药品: 'Expenses:Health:Medical',
 
     /// 娱乐
     电影: 'Expenses:Entertainment:Movie',
