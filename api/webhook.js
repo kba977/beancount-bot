@@ -11,7 +11,7 @@ const { accounts_str } = require('../utils/accounts');
 const bot_id = process.env.BOT_ID;
 const GITHUB_REPO = process.env.GITHUB_REPO || 'kba977/MyMoney';
 const GITHUB_WORKFLOW = process.env.GITHUB_WORKFLOW || 'query.yml';
-const GITHUB_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_ACTION_ACCESS_TOKEN;
 
 // Function to trigger GitHub Action for queries
 async function triggerGitHubAction(query) {
