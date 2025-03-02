@@ -9,6 +9,61 @@ const { parse } = require('../utils/parser');
 const { accounts_str } = require('../utils/accounts');
 
 const bot_id = process.env.BOT_ID;
+const GITHUB_REPO = process.env.GITHUB_REPO || 'kba977/MyMoney';
+const GITHUB_WORKFLOW = process.env.GITHUB_WORKFLOW || 'query.yml';
+const GITHUB_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+
+// Function to trigger GitHub Action for queries
+async function triggerGitHubAction(query) {
+  const url = `https://api.github.com/repos/${GITHUB_REPO}/actions/workflows/${GITHUB_WORKFLOW}/dispatches`;
+  const payload = JSON.stringify({
+    ref: "main",
+    inputs: {
+      query: query,
+    }
+  });
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Authorization": `token ${GITHUB_TOKEN}`,
+      "Accept": "application/vnd.github.v3+json",
+      "Content-Type": "application/json"
+    },
+    body: payload
+  };
+
+  try {
+    const response = await fetch(url, options);
+    return response.status === 204 ? "查询已触发，请稍等..." : `触发失败：${response.statusText}`;
+  } catch (error) {
+    return `触发失败：${error.message}`;
+  }
+}
+
+// Define query commands and their corresponding SQL queries
+const QUERY_COMMANDS = {
+  '/query_accounts': null, // Special case, uses accounts_str()
+  '/query_networth_bank': 'SELECT sum(position) as net_worth WHERE account ~ "^Assets:Bank" OR account ~ "^Liabilities"',
+  '/query_networth_investment': 'SELECT CONVERT(sum(position), "CNY") as net_worth WHERE account ~ "^Assets:Investment"'
+};
+
+// Handle query commands
+async function handleQueryCommand(bot, chatId, messageId, command) {
+  if (command === '/query_accounts') {
+    return bot.sendMessage(chatId, accounts_str(), { 
+      reply_to_message_id: messageId, 
+      parse_mode: 'Markdown' 
+    });
+  } else if (QUERY_COMMANDS[command]) {
+    const result = await triggerGitHubAction(QUERY_COMMANDS[command]);
+    return bot.sendMessage(chatId, result, {
+      reply_to_message_id: messageId,
+      parse_mode: 'Markdown'
+    });
+  }
+  return null;
+}
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
@@ -32,11 +87,9 @@ module.exports = async (request, response) => {
     const { chat: { id, first_name }, text, message_id } = message;
 
     if (id == bot_id) {
-      if (text == '/accounts') {
-        await bot.sendMessage(id, accounts_str(), { 
-          reply_to_message_id: message_id, 
-          parse_mode: 'Markdown' 
-        });
+      // Check if the message is a query command
+      if (Object.keys(QUERY_COMMANDS).includes(text)) {
+        await handleQueryCommand(bot, id, message_id, text);
       }
       // Check the message send to telegram is valid format
       else if (!text.match(/^@.*?\s>\s.+/)) {
